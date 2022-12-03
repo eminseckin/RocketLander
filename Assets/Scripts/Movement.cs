@@ -16,6 +16,7 @@ public class Movement : MonoBehaviour
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem leftEngineParticles;
     [SerializeField] ParticleSystem rightEngineParticles;
+    [SerializeField] Material launchPadMaterial;
 
 
     Rigidbody rb;
@@ -31,6 +32,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        launchPadMaterial.color = new Color(0, 82/255f, 255/255f);
         rb = GetComponent<Rigidbody>();
         fuel = GetComponent<Fuel>();
         audioSourceMainEngine = GetComponents<AudioSource>()[0];
@@ -69,6 +71,12 @@ public class Movement : MonoBehaviour
             if (!mainEngineParticles.isPlaying)
             {
                 mainEngineParticles.Play();
+            }
+            if (gameObject.transform.position.y > 10)
+            {
+                GameObject.Find("Start Ramp").tag = "Untagged";
+                GameObject.Find("Start Ramp").transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.red; 
+                launchPadMaterial.color = new Color(217/255f, 227/255f, 238/255f);
             }
         } 
         else

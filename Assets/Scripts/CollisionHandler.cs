@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,7 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] AudioClip success;
     [SerializeField] ParticleSystem crashParticles;
     [SerializeField] ParticleSystem successParticles;
+    [SerializeField] List<GameObject> rocketBodyObjects;
 
     bool isTransitioning = false;
     bool collisionDisabled = false;
@@ -41,7 +43,6 @@ public class CollisionHandler : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(gameObject.transform.rotation.z);
         if (isTransitioning || collisionDisabled) { return;}       
 
         switch (collision.gameObject.tag)
@@ -81,9 +82,18 @@ public class CollisionHandler : MonoBehaviour
         GetComponents<AudioSource>()[0].Stop();
         GetComponents<AudioSource>()[1].Stop();
         GetComponent<AudioSource>().PlayOneShot(crash);
-        crashParticles.Play();
-
+        crashParticles.Play();    
+        rocketBodyObjects[0].transform.Translate(RandomNumber(), RandomNumber(), RandomNumber());      
+        rocketBodyObjects[1].transform.Translate(RandomNumber(), RandomNumber(), RandomNumber());       
+        rocketBodyObjects[2].transform.Translate(RandomNumber(), RandomNumber(), RandomNumber());      
+        rocketBodyObjects[3].transform.Translate(RandomNumber(), RandomNumber(), RandomNumber());       
+        rocketBodyObjects[4].transform.Translate(RandomNumber(), RandomNumber(), RandomNumber());
         Invoke("ReloadLevel", levelLoadDelay);
+    }
+
+    float RandomNumber()
+    {
+        return Random.Range(-0.2f, 0.2f);
     }
 
     void StartSuccessSequence()

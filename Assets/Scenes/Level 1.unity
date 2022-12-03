@@ -1021,6 +1021,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e4382934616a05b46963f5fd0ab1a73f, type: 3}
   m_PrefabInstance: {fileID: 55451867}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &900268091 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6417439149721006383, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+  m_PrefabInstance: {fileID: 6182944442041534909}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &911334369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6417439149373699222, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+  m_PrefabInstance: {fileID: 6182944442041534909}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &920455673 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2b2235f44884950409a65f07d2209e6c, type: 3}
@@ -1134,6 +1144,21 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1141815482 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6417439150091291692, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+  m_PrefabInstance: {fileID: 6182944442041534909}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1258535136 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6417439148784679189, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+  m_PrefabInstance: {fileID: 6182944442041534909}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1275723353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6417439150094529766, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+  m_PrefabInstance: {fileID: 6182944442041534909}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1350175913 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6182944441788282321, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
@@ -7098,10 +7123,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 639029887, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+      propertyPath: m_Name
+      value: Rocket Body
+      objectReference: {fileID: 0}
     - target: {fileID: 755082968, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
       propertyPath: sideEngines
       value: 
       objectReference: {fileID: 8300000, guid: 1c12c6e850aec0f4d8ff87058dde853c, type: 3}
+    - target: {fileID: 755082968, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+      propertyPath: launchPadMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: efde39b9aeaba78488cf92556aa9300d, type: 2}
     - target: {fileID: 1521176951511747170, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
       propertyPath: m_Volume
       value: 0.4
@@ -7158,5 +7191,29 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6182944442041534911, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+      propertyPath: rocketBodyObjects.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6182944442041534911, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+      propertyPath: rocketBodyObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 911334369}
+    - target: {fileID: 6182944442041534911, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+      propertyPath: rocketBodyObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 900268091}
+    - target: {fileID: 6182944442041534911, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+      propertyPath: rocketBodyObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 1141815482}
+    - target: {fileID: 6182944442041534911, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+      propertyPath: rocketBodyObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 1258535136}
+    - target: {fileID: 6182944442041534911, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
+      propertyPath: rocketBodyObjects.Array.data[4]
+      value: 
+      objectReference: {fileID: 1275723353}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e71f428d435cc254ea2c3acfbb04d58b, type: 3}
