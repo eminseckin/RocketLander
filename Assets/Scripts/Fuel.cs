@@ -4,12 +4,17 @@ using UnityEngine.UI;
 
 
 public class Fuel : MonoBehaviour
-{    
-    [SerializeField] Slider fuelSlider;
+{  
     [SerializeField] float fuel;
     [SerializeField] float mainEngineFuelSpent;
     [SerializeField] float sideEnginesFuelSpent;
 
+    Slider fuelSlider;
+
+    private void Start()
+    {
+        fuelSlider = GameObject.Find("FuelSlider").GetComponent<Slider>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -32,5 +37,10 @@ public class Fuel : MonoBehaviour
     public float FuelLeft()
     {
         return fuel;
+    }
+
+    public void ResetFuel()
+    {
+        fuel = 100;
     }
 }

@@ -9,6 +9,9 @@ TagManager:
   - Rocket Base
   - Atmosphere
   - Barrier
+  - Music
+  - Star
+  - Fuel Tank
   layers:
   - Default
   - TransparentFX

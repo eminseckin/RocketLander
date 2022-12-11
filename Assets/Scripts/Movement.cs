@@ -23,6 +23,7 @@ public class Movement : MonoBehaviour
     AudioSource audioSourceMainEngine;
     AudioSource audioSourceSideEngines;
     Fuel fuel;
+    GameBrain gameBrain;
 
 
     bool isAlive;
@@ -36,11 +37,18 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         fuel = GetComponent<Fuel>();
         audioSourceMainEngine = GetComponents<AudioSource>()[0];
-        audioSourceSideEngines = GetComponents<AudioSource>()[1];        
+        audioSourceSideEngines = GetComponents<AudioSource>()[1];      
+        gameBrain= FindObjectOfType<GameBrain>().GetComponent<GameBrain>();
     }
 
     void Update()
     {
+        if (gameBrain.isGamePaused) 
+        {
+            audioSourceMainEngine.Stop();
+            audioSourceSideEngines.Stop();  
+        }
+        if (gameBrain.isGamePaused) { return; }
         ProcessThrust();
         ProcessRotation();
     }

@@ -1,10 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
-    [SerializeField] float levelLoadDelay = 2f;
+    [SerializeField] float levelLoadDelay = 2.2f;
     [SerializeField] AudioClip crash;
     [SerializeField] AudioClip success;
     [SerializeField] ParticleSystem crashParticles;
@@ -15,13 +17,16 @@ public class CollisionHandler : MonoBehaviour
     bool collisionDisabled = false;
 
     Rigidbody rb;
-    GameObject outOfBoundsText;
+    TextMeshProUGUI infoText;
+    GameBrain gameBrain;
+    Fuel fuel;
 
     void Start()
     {
        rb = GetComponent<Rigidbody>();
-       outOfBoundsText = GameObject.Find("Out Of Bounds Text");
-        outOfBoundsText.SetActive(false);
+       gameBrain= GameObject.Find("GameBrain").GetComponent<GameBrain>();
+       infoText = GameObject.Find("InfoText").GetComponent<TextMeshProUGUI>();       
+       fuel = GameObject.Find("Rocket").GetComponent<Fuel>();
     }
 
     void Update()
@@ -56,9 +61,7 @@ public class CollisionHandler : MonoBehaviour
                 {
                     StartSuccessSequence();        
                 }
-                break;
-            case "Barrier":
-                break;
+                break;                   
             default:
                 StartCrashSequence();                
                 break;
@@ -69,8 +72,21 @@ public class CollisionHandler : MonoBehaviour
     {
         if (other.gameObject.tag == "Barrier")
         {
-            outOfBoundsText.SetActive(true);
+            infoText.text = "You are leaving mission area... \n" +
+                            "Returning to base !";    
             Invoke("ReloadLevel", 3f);
+        }
+
+        if (other.gameObject.tag == "Star")
+        {
+            gameBrain.IncreaseStarsCollected(1);
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag == "Fuel Tank")
+        {            
+            fuel.ResetFuel();
+            Destroy(other.gameObject);
         }
     }
 
@@ -88,6 +104,8 @@ public class CollisionHandler : MonoBehaviour
         rocketBodyObjects[2].transform.Translate(RandomNumber(), RandomNumber(), RandomNumber());      
         rocketBodyObjects[3].transform.Translate(RandomNumber(), RandomNumber(), RandomNumber());       
         rocketBodyObjects[4].transform.Translate(RandomNumber(), RandomNumber(), RandomNumber());
+        gameBrain.DecreaseLivesCount();
+        StartCoroutine(gameBrain.CheckGameStatus(2f));
         Invoke("ReloadLevel", levelLoadDelay);
     }
 
@@ -101,9 +119,11 @@ public class CollisionHandler : MonoBehaviour
         isTransitioning= true;
         GetComponent<Movement>().enabled = false;
         rb.constraints = RigidbodyConstraints.FreezePosition;
-        GetComponent<AudioSource>().Stop();
+        GetComponents<AudioSource>()[0].Stop();
+        GetComponents<AudioSource>()[1].Stop();
         GetComponent<AudioSource>().PlayOneShot(success);
-        successParticles.Play();        
+        successParticles.Play();
+        gameBrain.FinishLevelStarsCount();
         Invoke("LoadNextLevel", levelLoadDelay);
     }
 
@@ -111,7 +131,8 @@ public class CollisionHandler : MonoBehaviour
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;        
         SceneManager.LoadScene(currentSceneIndex);
-    }
+        gameBrain.RestartLevelStarsCount();
+    }    
 
     void LoadNextLevel()
     {
