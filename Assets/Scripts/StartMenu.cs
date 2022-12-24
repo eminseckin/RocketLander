@@ -22,4 +22,19 @@ public class StartMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Level 1");
     }
+
+    public void StartMenuControlsButton()
+    {
+        SceneManager.LoadScene("Controls");
+    }
+
+    public void BackButton()
+    {
+       SceneManager.LoadScene("Entry");        
+    }
+
+    public void HowToPlayButton()
+    {
+        SceneManager.LoadScene("HowToPlay");
+    }
 }

@@ -7,13 +7,15 @@ public class GameBrain : MonoBehaviour
 {
     [SerializeField] int lives;
 
-    int starsCollected;
+    public int starsCollected;
     int totalStartsCollected;
+    public int starsToCollect = 5;
     public bool isGamePaused = false;
-
-
+    public int level = 0;
+    public bool gameCompleted = false;
 
     static GameBrain instance = null;
+    GameCanvas canvas;
 
 
     private void Awake()
@@ -27,6 +29,11 @@ public class GameBrain : MonoBehaviour
             instance = this;
             GameObject.DontDestroyOnLoad(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        
     }
 
     void Update()
@@ -70,7 +77,7 @@ public class GameBrain : MonoBehaviour
 
     public void IncreaseStarsCollected(int stars)
     {
-        starsCollected+= stars;
+        starsCollected += stars;
         totalStartsCollected += stars;
     }
 
@@ -93,16 +100,38 @@ public class GameBrain : MonoBehaviour
 
     public IEnumerator CheckGameStatus(float time)
     {
-        if (lives <= 0)
+        if (lives <= 0 )
         {
             yield return new WaitForSeconds(time);
-            SceneManager.LoadScene("GameOver");
+            GameOver();
+        } 
+        else
+        {
+
         } 
     }
 
     public void StartGame()
     {
         SceneManager.LoadScene("Level 1");
+    }
+
+    public void GameOver()
+    {
+        if (SceneManager.GetActiveScene().name == "Level 10" && gameCompleted )
+        {
+            canvas = GameObject.Find("Canvas").GetComponent<GameCanvas>();
+            canvas.gameOverMenu.SetActive(true);
+            canvas.gameOverText.text = "Congratulations";
+            canvas.finalScoreText.text = "You beat the game";
+            
+        } else
+        {
+            canvas = GameObject.Find("Canvas").GetComponent<GameCanvas>();
+            canvas.gameOverMenu.SetActive(true);
+            canvas.finalScoreText.text = $"Max level reached: {SceneManager.GetActiveScene().name}";
+        }
+        
     }
 
     public void ExitGame()

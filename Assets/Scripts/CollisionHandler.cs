@@ -92,6 +92,7 @@ public class CollisionHandler : MonoBehaviour
 
     void StartCrashSequence()
     {
+        
         isTransitioning = true;
         GameObject.Find("Main Camera").GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
         GetComponent<Movement>().enabled = false;
@@ -106,7 +107,12 @@ public class CollisionHandler : MonoBehaviour
         rocketBodyObjects[4].transform.Translate(RandomNumber(), RandomNumber(), RandomNumber());
         gameBrain.DecreaseLivesCount();
         StartCoroutine(gameBrain.CheckGameStatus(2f));
+        if (gameBrain.GetLives() == 0f)
+        {
+            return;
+        }
         Invoke("ReloadLevel", levelLoadDelay);
+
     }
 
     float RandomNumber()
@@ -123,8 +129,16 @@ public class CollisionHandler : MonoBehaviour
         GetComponents<AudioSource>()[1].Stop();
         GetComponent<AudioSource>().PlayOneShot(success);
         successParticles.Play();
-        gameBrain.FinishLevelStarsCount();
-        Invoke("LoadNextLevel", levelLoadDelay);
+        if (SceneManager.GetActiveScene().name != "Level 10") 
+        {
+            Invoke("LoadNextLevel", levelLoadDelay);
+        }
+        else
+        {
+            gameBrain.gameCompleted= true;
+            Invoke("SuccessOver", levelLoadDelay);
+        }
+        
     }
 
     void ReloadLevel()
@@ -132,7 +146,12 @@ public class CollisionHandler : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;        
         SceneManager.LoadScene(currentSceneIndex);
         gameBrain.RestartLevelStarsCount();
-    }    
+    }
+    
+    void SuccessOver()
+    {
+        gameBrain.GameOver();
+    }
 
     void LoadNextLevel()
     {
@@ -143,5 +162,6 @@ public class CollisionHandler : MonoBehaviour
             nextSceneIndex= 0;
         }
         SceneManager.LoadScene(nextSceneIndex);
+        gameBrain.starsCollected = 0;
     }
 }

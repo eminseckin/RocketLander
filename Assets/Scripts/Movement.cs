@@ -55,7 +55,7 @@ public class Movement : MonoBehaviour
 
     void ProcessThrust()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             StartThrusting();
         }
@@ -102,7 +102,7 @@ public class Movement : MonoBehaviour
 
     void ProcessRotation()
     {       
-        if (Input.GetKey(KeyCode.A) && canRotate && fuel.FuelLeft() > 0)
+        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && canRotate && fuel.FuelLeft() > 0)
         {
             fuel.SideEnginesFuelConsumption();
             ApplyRotation(Vector3.forward);
@@ -119,7 +119,7 @@ public class Movement : MonoBehaviour
             }
 
         }
-        else if (Input.GetKey(KeyCode.D) && canRotate && fuel.FuelLeft() > 0)
+        else if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && canRotate && fuel.FuelLeft() > 0)
         {
             fuel.SideEnginesFuelConsumption();
             rightEngineParticles.Stop();
